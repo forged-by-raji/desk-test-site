@@ -1,0 +1,19 @@
+---
+// One photo, served as resized WebP at the widths the layout needs.
+import { Image } from 'astro:assets';
+import { photos } from '../photos.ts';
+import type { Pic } from '../../features/home/application/home.ts';
+interface Props { pic: Pic; sizes: string; eager?: boolean; par?: boolean }
+const { pic, sizes, eager = false, par = false } = Astro.props;
+---
+<Image
+  src={photos[pic.id]}
+  alt={pic.alt}
+  widths={[480, 800, 1200, 1600]}
+  sizes={sizes}
+  format="webp"
+  quality={78}
+  loading={eager ? 'eager' : 'lazy'}
+  style={pic.position ? `object-position: ${pic.position}` : undefined}
+  data-par={par ? '' : undefined}
+/>

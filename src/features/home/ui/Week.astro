@@ -1,0 +1,23 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { week: ReturnType<typeof useHomeScreen>['week'] }
+const { week } = Astro.props;
+---
+<section class="wrap rise" id="week" aria-labelledby="week-h">
+  <div class="head">
+    <h2 class="cond" id="week-h">This week</h2>
+  </div>
+  <div class="week">
+    {week.map((g) => (
+      <article class="group">
+        <Pic pic={g.pic} sizes="(max-width: 1000px) 90vw, 33vw" />
+        <div class="body">
+          <span class={`tag ${g.id}`}><i aria-hidden="true"></i>{g.name}, {g.ages}</span>
+          <h3 class="cond">{g.name}</h3>
+          <ul class="slots">{g.slots.map((s) => <li><span>{s.days}</span><span class="time cond">{s.time}</span></li>)}</ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

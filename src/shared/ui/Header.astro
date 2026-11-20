@@ -1,0 +1,16 @@
+---
+import { gym } from '../../features/gym/domain/facts.ts';
+import { links } from '../links.ts';
+---
+<header class="wrap top">
+  <a class="brand cond" href="/" aria-label={`${gym.name}, home`}>
+    <svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="18" r="13" fill="none" stroke="currentColor" stroke-width="3"/><path d="M17 18V9.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M13 3h8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    {gym.name}
+  </a>
+  <nav class="links" aria-label="Main">
+    <a class="plain" href={links.classes}>Classes and times</a>
+    <a class="plain" href={links.prices}>Prices</a>
+    <a class="plain" href={links.coaches}>Coaches</a>
+    <a class="btn btn-mat" href={links.book}>{gym.action}</a>
+  </nav>
+</header>

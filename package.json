@@ -1,0 +1,22 @@
+{
+  "name": "desk-test-site",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "tsc --noEmit",
+    "test": "node --test src/features/*/domain/*.test.ts"
+  },
+  "dependencies": {
+    "astro": "7.4.0",
+    "sass": "1.107.1",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.8.0"
+  }
+}

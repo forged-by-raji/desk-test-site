@@ -1,0 +1,24 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { coaches: ReturnType<typeof useHomeScreen>['coaches'] }
+const { coaches } = Astro.props;
+---
+<section class="wrap rise" id="coaches" aria-labelledby="coach-h">
+  <div class="head">
+    <h2 class="cond" id="coach-h">Your coaches</h2>
+  </div>
+  <div class="coaches">
+    {coaches.map((c) => (
+      <article class="coach">
+        <Pic pic={c.pic} sizes="(max-width: 1000px) 90vw, 25vw" />
+        <div class="body">
+          <h3 class="cond">{c.name}</h3>
+          <p class="role">{c.role}</p>
+          <blockquote>"{c.quote}"</blockquote>
+          <ul>{c.facts.map((f) => <li>{f}</li>)}</ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
