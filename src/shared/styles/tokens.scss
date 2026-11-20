@@ -1,0 +1,17 @@
+// The gym's colours, sampled from its own photos (direction sheet, item 3).
+:root {
+  --ink: #141414;
+  --white: #ffffff;
+  --mat: #2f5a8f;        // the mats in shade, the one action colour
+  --mat-deep: #24476f;
+  --line: #e4e4e4;
+  --kick: #f5c400;       // Little Kickers, only with the group's name
+  --junior: #16a34a;     // Juniors, only with the group's name
+  --max: 1600px;
+  --gutter: clamp(20px, 4vw, 64px);
+  --radius: 28px;
+  --gap: clamp(12px, 1.4cqi, 24px);
+}
+
+$phone: 640px;
+$tablet: 1000px;

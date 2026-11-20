@@ -1,0 +1,22 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { rounds: ReturnType<typeof useHomeScreen>['rounds']; note: string }
+const { rounds, note } = Astro.props;
+---
+<section class="wrap rise" aria-labelledby="class-h">
+  <div class="head">
+    <h2 class="cond" id="class-h">The class, round by round</h2>
+    <p>{note}</p>
+  </div>
+  <ol class="rounds">
+    {rounds.map((r) => (
+      <li class="round">
+        <span class="num">{r.rounds}</span>
+        <button type="button" aria-expanded="false"><span class="name cond">{r.name}</span></button>
+        <p class="what">{r.what}</p>
+        <div class="inline"><Pic pic={r.pic} sizes="(max-width: 1000px) 90vw, 340px" /></div>
+      </li>
+    ))}
+  </ol>
+</section>

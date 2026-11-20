@@ -1,0 +1,18 @@
+---
+import { links } from '../../../shared/links.ts';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { plans: ReturnType<typeof useHomeScreen>['plans']; free: string; action: string }
+const { plans, free, action } = Astro.props;
+---
+<section class="wrap rise" id="prices" aria-labelledby="price-h">
+  <div class="head">
+    <h2 class="cond" id="price-h">Prices, plainly</h2>
+  </div>
+  <div class="free">
+    <p>{free}</p>
+    <a class="btn btn-white" href={links.book}>{action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+  </div>
+  <div class="plans">
+    {plans.map((p) => <div class="plan"><span class="who">{p.who}</span><span class="price cond">${p.price}<small>{p.per}</small></span><p>{p.what}</p></div>)}
+  </div>
+</section>

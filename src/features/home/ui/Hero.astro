@@ -1,0 +1,27 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import { links } from '../../../shared/links.ts';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { hero: ReturnType<typeof useHomeScreen>['hero']; gym: ReturnType<typeof useHomeScreen>['gym'] }
+const { hero, gym } = Astro.props;
+---
+<div class="wrap">
+  <div class="field">
+    <h1 class="cond"><span class="l1"><b>{hero.headline[0]}</b> <b>{hero.headline[1]}</b></span><span>{hero.headline[2]}</span></h1>
+    <div class="band">
+      <div class="lead">
+        <p>{hero.line}</p>
+        <ul class="glance" aria-label="This week">
+          {hero.glance.map((g) => <li><i class={`dot ${g.id}`} aria-hidden="true"></i><b>{g.label}</b><span class="t">{g.when}</span></li>)}
+        </ul>
+        <div class="actions">
+          <a class="btn btn-white" href={links.book}>{gym.action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <a class="quiet" href={gym.whatsapp.href}>Message us on WhatsApp, <span class="nowrap">{gym.whatsapp.label}</span></a>
+        </div>
+      </div>
+      <div class="strip">
+        {hero.windows.map((w) => <figure class="window"><Pic pic={w.pic} sizes="(max-width: 640px) 72vw, 25vw" eager par /><figcaption>{w.caption}</figcaption></figure>)}
+      </div>
+    </div>
+  </div>
+</div>

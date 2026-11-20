@@ -1,0 +1,16 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import { links } from '../../../shared/links.ts';
+import type { useHomeScreen } from '../application/home.ts';
+interface Props { closing: ReturnType<typeof useHomeScreen>['closing']; action: string }
+const { closing, action } = Astro.props;
+---
+<div class="wrap rise">
+  <div class="close">
+    <div class="side">
+      <h2 class="cond">{closing.title}</h2>
+      <a class="btn btn-white" href={links.book}>{action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+    </div>
+    <Pic pic={closing.pic} sizes="(max-width: 1000px) 90vw, 45vw" />
+  </div>
+</div>
