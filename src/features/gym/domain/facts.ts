@@ -97,3 +97,16 @@ export function board(gs: Group[]): BoardRow[] {
     cells: week.map((day) => ({ day, groups: gs.filter((g) => g.slots.some((s) => s.time === time && s.on.includes(day))) })),
   }));
 }
+
+export const coachesPage = { title: 'Your coaches', line: 'Who teaches your child, and why you can trust them.' };
+
+export const trialPage = {
+  title: 'Your first class is free',
+  steps: [
+    { name: 'Book', what: 'Tell us who is coming and which day suits.' },
+    { name: 'Come along', what: 'Arrive ten minutes early.' },
+    { name: 'Decide', what: 'Join if you liked it, with no pressure.' },
+  ],
+  button: 'Book my free class',
+  after: 'Thanks. We will call you within a day to confirm.',
+};

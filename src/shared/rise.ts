@@ -5,7 +5,7 @@ export function startRise(): void {
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
   document.querySelectorAll('.rise').forEach((el) => (still ? el.classList.add('in') : io.observe(el)));
   if (still) return;
-  const head = [...document.querySelectorAll<HTMLElement>('.pagehead [data-par]')];
+  const head = [...document.querySelectorAll<HTMLElement>('.pagehead [data-par], .trial .window [data-par]')];
   const close = [...document.querySelectorAll<HTMLElement>('.close-pic [data-par]')];
   let ticking = false;
   const move = () => {

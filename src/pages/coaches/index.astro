@@ -1,0 +1,23 @@
+---
+import Layout from '../../shared/ui/Layout.astro';
+import Header from '../../shared/ui/Header.astro';
+import Footer from '../../shared/ui/Footer.astro';
+import PageHead from '../../shared/ui/PageHead.astro';
+import Closing from '../../shared/ui/Closing.astro';
+import CoachList from '../../features/coaches/ui/CoachList.astro';
+import { useCoachesScreen } from '../../features/coaches/application/coaches.ts';
+const s = useCoachesScreen();
+---
+<Layout title="Your coaches: Test Gym Kickboxing" description={s.page.line}>
+  <Header />
+  <main id="top">
+    <PageHead title={s.page.title} line={s.page.line} windows={s.windows} />
+    <CoachList coaches={s.coaches} />
+    <Closing />
+  </main>
+  <Footer />
+  <script>
+    import { startRise } from '../../shared/rise.ts';
+    startRise();
+  </script>
+</Layout>
