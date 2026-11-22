@@ -1,11 +1,9 @@
 // The home page's state: the facts shaped for each section, and the photo and words for each picture.
 // The ui files only read from this.
-import { closing, coaches, freeClass, glance, groups, gym, plans, rounds } from '../../gym/domain/facts.ts';
-import type { PhotoId } from '../../gym/domain/facts.ts';
-
-export interface Pic { id: PhotoId; alt: string; position?: string }
-
-const AI = ' (AI generated)';
+import { coaches, freeClass, glance, groups, gym, plans, rounds } from '../../gym/domain/facts.ts';
+import { groupCards } from '../../gym/application/cards.ts';
+import type { Pic } from '../../../shared/photos.ts';
+import { AI } from '../../../shared/photos.ts';
 
 export function useHomeScreen() {
   return {
@@ -22,17 +20,9 @@ export function useHomeScreen() {
     },
     rounds: rounds.map((r) => ({ ...r, pic: { id: r.photo, alt: `${r.name}: ${r.what}${AI}` } satisfies Pic })),
     classNote: gym.classNote,
-    week: groups.map((g) => ({
-      ...g,
-      pic: {
-        id: g.id === 'kickers' ? 'little-kickers' : g.id === 'juniors' ? 'master' : 'adults',
-        alt: `${g.name}, ${g.ages}${AI}`,
-        position: g.id === 'kickers' ? '50% 45%' : g.id === 'juniors' ? '70% 80%' : '45% 50%',
-      } satisfies Pic,
-    })),
+    week: groupCards(),
     freeClass,
     plans,
     coaches: coaches.map((c) => ({ ...c, pic: { id: c.photo, alt: `${c.name}, ${c.role.split('.')[0].toLowerCase()}${AI}` } satisfies Pic })),
-    closing: { title: closing, pic: { id: 'gloves', alt: `Kids' gloves and hand wraps on the blue mat${AI}` } satisfies Pic },
   };
 }

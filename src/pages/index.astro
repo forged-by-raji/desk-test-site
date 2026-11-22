@@ -4,10 +4,10 @@ import Header from '../shared/ui/Header.astro';
 import Footer from '../shared/ui/Footer.astro';
 import Hero from '../features/home/ui/Hero.astro';
 import Rounds from '../features/home/ui/Rounds.astro';
-import Week from '../features/home/ui/Week.astro';
+import GroupCards from '../shared/ui/GroupCards.astro';
 import Prices from '../features/home/ui/Prices.astro';
 import Coaches from '../features/home/ui/Coaches.astro';
-import Close from '../features/home/ui/Close.astro';
+import Closing from '../shared/ui/Closing.astro';
 import { useHomeScreen } from '../features/home/application/home.ts';
 const s = useHomeScreen();
 ---
@@ -16,14 +16,16 @@ const s = useHomeScreen();
   <main id="top">
     <Hero hero={s.hero} gym={s.gym} />
     <Rounds rounds={s.rounds} note={s.classNote} />
-    <Week week={s.week} />
+    <GroupCards cards={s.week} title="This week" id="week" more={{ href: '/classes/', label: 'See every class' }} />
     <Prices plans={s.plans} free={s.freeClass} action={s.gym.action} />
     <Coaches coaches={s.coaches} />
-    <Close closing={s.closing} action={s.gym.action} />
+    <Closing />
   </main>
   <Footer />
   <script>
     import { startHome } from '../features/home/application/interactions.ts';
+    import { startRise } from '../shared/rise.ts';
     startHome();
+    startRise();
   </script>
 </Layout>

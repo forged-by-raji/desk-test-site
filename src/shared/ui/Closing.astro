@@ -1,0 +1,18 @@
+---
+import Pic from './Pic.astro';
+import { links } from '../links.ts';
+import { closing, gym } from '../../features/gym/domain/facts.ts';
+import { AI } from '../photos.ts';
+import type { Pic as PicData } from '../photos.ts';
+interface Props { pic?: PicData }
+const { pic = { id: 'gloves', alt: `Kids' gloves and hand wraps on the blue mat${AI}` } } = Astro.props;
+---
+<div class="wrap rise">
+  <div class="close">
+    <div class="side">
+      <h2 class="cond">{closing}</h2>
+      <a class="btn btn-white" href={links.book}>{gym.action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+    </div>
+    <div class="close-pic"><Pic pic={pic} sizes="(max-width: 1000px) 90vw, 45vw" par /></div>
+  </div>
+</div>

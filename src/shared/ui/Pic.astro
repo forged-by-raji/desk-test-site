@@ -2,7 +2,7 @@
 // One photo, served as resized WebP at the widths the layout needs.
 import { Image } from 'astro:assets';
 import { photos } from '../photos.ts';
-import type { Pic } from '../../features/home/application/home.ts';
+import type { Pic } from '../photos.ts';
 interface Props { pic: Pic; sizes: string; eager?: boolean; par?: boolean }
 const { pic, sizes, eager = false, par = false } = Astro.props;
 ---

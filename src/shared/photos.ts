@@ -13,3 +13,7 @@ import timer from '../assets/photos/timer.png';
 export const photos: Record<PhotoId, ImageMetadata> = {
   master, pads, 'little-kickers': littleKickers, adults, 'coach-dana': coachDana, 'coach-marco': coachMarco, gloves, timer,
 };
+
+// One picture on a page: which photo, its words, and where to crop it.
+export interface Pic { id: PhotoId; alt: string; position?: string }
+export const AI = ' (AI generated)';

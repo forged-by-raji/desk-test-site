@@ -1,0 +1,15 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import type { Pic as PicData } from '../../../shared/photos.ts';
+interface Props { text: string; pic: PicData }
+const { text, pic } = Astro.props;
+---
+<section class="wrap rise" aria-labelledby="bring-h">
+  <div class="bring">
+    <div>
+      <h2 class="cond" id="bring-h">What to bring</h2>
+      <p>{text}</p>
+    </div>
+    <Pic pic={pic} sizes="(max-width: 1000px) 90vw, 40vw" />
+  </div>
+</section>
