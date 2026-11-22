@@ -1,0 +1,24 @@
+---
+// The top of an inner page, in the home hero's language: the page's one loud line on the mat blue
+// field, its line and the action, and photo windows from the class beside them.
+import Pic from './Pic.astro';
+import { links } from '../links.ts';
+import { gym } from '../../features/gym/domain/facts.ts';
+import type { Pic as PicData } from '../photos.ts';
+interface Props { title: string; line: string; windows: { caption: string; pic: PicData }[] }
+const { title, line, windows } = Astro.props;
+---
+<div class="wrap">
+  <div class="field pagehead">
+    <h1 class="cond">{title}</h1>
+    <div class="pagehead-band">
+      <div class="pagehead-lead">
+        <p>{line}</p>
+        <a class="btn btn-white" href={links.book}>{gym.action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      </div>
+      <div class="strip">
+        {windows.map((w) => <figure class="window"><Pic pic={w.pic} sizes="(max-width: 640px) 72vw, 30vw" eager par /><figcaption>{w.caption}</figcaption></figure>)}
+      </div>
+    </div>
+  </div>
+</div>

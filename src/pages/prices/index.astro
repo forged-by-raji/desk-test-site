@@ -1,0 +1,23 @@
+---
+import Layout from '../../shared/ui/Layout.astro';
+import Header from '../../shared/ui/Header.astro';
+import Footer from '../../shared/ui/Footer.astro';
+import PageHead from '../../shared/ui/PageHead.astro';
+import Closing from '../../shared/ui/Closing.astro';
+import Plans from '../../features/prices/ui/Plans.astro';
+import { usePricesScreen } from '../../features/prices/application/prices.ts';
+const s = usePricesScreen();
+---
+<Layout title="Prices: Test Gym Kickboxing" description={`${s.page.free.head} ${s.page.noContract}`}>
+  <Header />
+  <main id="top">
+    <PageHead title={s.page.title} line={`${s.page.free.head} ${s.page.free.line}`} windows={s.windows} />
+    <Plans page={s.page} />
+    <Closing pic={s.closingPic} />
+  </main>
+  <Footer />
+  <script>
+    import { startRise } from '../../shared/rise.ts';
+    startRise();
+  </script>
+</Layout>

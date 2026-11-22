@@ -127,9 +127,11 @@ main > section.wrap { margin-top: clamp(80px, 7vh, 128px); }
 .close { margin-top: clamp(72px, 7cqi, 128px); background: var(--mat); color: var(--white); border-radius: var(--radius); padding: clamp(32px, 4cqi, 64px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: center; container-type: inline-size;
   h2 { margin: 0; font-size: clamp(44px, 5cqi, 80px); }
   .side { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
-  img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 18px; }
+  .close-pic { border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; }
+  img { width: 100%; height: 112%; object-fit: cover; }
 }
 
+main { padding-bottom: clamp(40px, 4vw, 72px); }
 footer { padding-top: 48px; padding-bottom: 48px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 16px;
   p { margin: 0; }
   a.quiet { display: inline-block; white-space: nowrap; }
@@ -178,3 +180,57 @@ footer { padding-top: 48px; padding-bottom: 48px; display: flex; justify-content
   .close { .btn { width: 100%; justify-content: center; } .side { align-items: stretch; } }
 }
 @media (min-width: $phone + 1) { .strip { display: contents; } }
+
+// Inner pages: the page's one loud line on the mat blue field.
+.pagehead { h1 { font-size: clamp(64px, 9cqi, 150px); line-height: .86; } }
+.load .pagehead h1 { animation: up .8s cubic-bezier(.2,.7,.2,1) both; }
+.load .pagehead-lead { animation: up .8s .1s cubic-bezier(.2,.7,.2,1) both; }
+.close img { will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .load .pagehead h1, .load .pagehead-lead { animation: none; } }
+.pagehead-band { margin-top: clamp(24px, 3cqi, 48px); display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: var(--gap); align-items: stretch; }
+.pagehead-lead { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; padding-right: 8px;
+  p { margin: 0; font-size: clamp(20px, 1.7cqi, 28px); line-height: 1.35; font-weight: 500; max-width: 26ch; }
+  .btn { align-self: flex-start; }
+}
+.pagehead .window { height: clamp(260px, 22cqi, 360px); }
+
+// The week as a wall board: days across, class times down, each class in its group's colour with its name.
+.board { width: 100%; margin-top: 8px; border-collapse: collapse; table-layout: fixed;
+  th, td { border-bottom: 1px solid var(--line); padding: 16px 8px; text-align: left; vertical-align: middle; }
+  thead th { font-weight: 700; font-size: 17px; border-bottom: 2px solid var(--ink); abbr { text-decoration: none; } }
+  tbody th { font-size: clamp(28px, 2.4cqi, 40px); width: 16%; }
+}
+.slot { display: inline-block; padding: 10px 14px; border-radius: 12px; font-weight: 700; font-size: 16px; line-height: 1.2;
+  &.kickers { background: var(--kick); color: var(--ink); }
+  &.juniors { background: var(--junior); color: var(--white); }
+  &.adults { background: var(--mat); color: var(--white); }
+}
+.byday { display: none; }
+
+// What to bring
+.bring { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: center;
+  h2 { margin: 0 0 16px; font-size: clamp(40px, 3.6cqi, 60px); }
+  p { margin: 0; font-size: clamp(20px, 1.6cqi, 26px); line-height: 1.4; max-width: 30ch; }
+  img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 22px; }
+}
+.nocontract { margin: 24px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 20px; font-weight: 600; }
+
+@media (max-width: $tablet) {
+  .bring { grid-template-columns: 1fr; }
+  .pagehead-band { grid-template-columns: 1fr 1fr; }
+  .pagehead-lead { grid-column: 1 / -1; padding-right: 0; }
+}
+@media (max-width: $phone) {
+  .pagehead h1 { font-size: 15cqi; }
+  .pagehead-band { display: flex; flex-direction: column; }
+  .pagehead-lead { gap: 22px; .btn { width: 100%; justify-content: center; align-self: stretch; } }
+  .pagehead .window { height: 260px; }
+  .board { display: none; }
+  .byday { display: grid; gap: 0; margin-top: 8px;
+    .day { border-bottom: 1px solid var(--line); padding: 18px 0; }
+    h3 { margin: 0 0 12px; font-size: 30px; }
+    ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    li { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .time { font-size: 26px; }
+  }
+}

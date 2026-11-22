@@ -1,0 +1,30 @@
+---
+import type { useClassesScreen } from '../application/classes.ts';
+type S = ReturnType<typeof useClassesScreen>;
+interface Props { days: S['days']; rows: S['rows']; byDay: S['byDay'] }
+const { days, rows, byDay } = Astro.props;
+---
+<section class="wrap rise" aria-labelledby="board-h">
+  <div class="head">
+    <h2 class="cond" id="board-h">The week</h2>
+  </div>
+  <table class="board">
+    <thead><tr><th scope="col">Time</th>{days.map((d) => <th scope="col"><abbr title={d.name}>{d.short}</abbr></th>)}</tr></thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <th scope="row" class="cond">{r.time}</th>
+          {r.cells.map((c) => <td>{c.groups.map((g) => <span class={`slot ${g.id}`}>{g.name}</span>)}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <div class="byday">
+    {byDay.map((d) => (
+      <div class="day">
+        <h3 class="cond">{d.name}</h3>
+        <ul>{d.classes.map((c) => <li><span class="time cond">{c.time}</span><span class={`slot ${c.group.id}`}>{c.group.name}</span></li>)}</ul>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,27 @@
+---
+import Layout from '../../shared/ui/Layout.astro';
+import Header from '../../shared/ui/Header.astro';
+import Footer from '../../shared/ui/Footer.astro';
+import PageHead from '../../shared/ui/PageHead.astro';
+import GroupCards from '../../shared/ui/GroupCards.astro';
+import Closing from '../../shared/ui/Closing.astro';
+import Board from '../../features/classes/ui/Board.astro';
+import Bring from '../../features/classes/ui/Bring.astro';
+import { useClassesScreen } from '../../features/classes/application/classes.ts';
+const s = useClassesScreen();
+---
+<Layout title="Classes and times: Test Gym Kickboxing" description={`${s.page.line} Kickboxing for kids and adult beginners in Testville.`}>
+  <Header />
+  <main id="top">
+    <PageHead title={s.page.title} line={s.page.line} windows={s.windows} />
+    <Board days={s.days} rows={s.rows} byDay={s.byDay} />
+    <GroupCards cards={s.cards} title="The groups" id="groups" />
+    <Bring text={s.page.bring} pic={s.bringPic} />
+    <Closing pic={s.closingPic} />
+  </main>
+  <Footer />
+  <script>
+    import { startRise } from '../../shared/rise.ts';
+    startRise();
+  </script>
+</Layout>

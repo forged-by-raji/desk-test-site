@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { coaches, glance, groups, gym, plans, rounds } from './facts.ts';
+import { board, coaches, glance, groups, gym, minutes, plans, pricesPage, rounds } from './facts.ts';
 
 test('the week at a glance reads the same as the approved still', () => {
   assert.deepEqual(groups.map(glance), ['Mon, Wed 4:30 PM', 'Tue, Thu 5:30 PM', 'Mon, Wed 7 PM, Sat 10 AM']);
@@ -18,6 +18,21 @@ test('times are written one way: h:mm PM', () => {
 });
 
 test('no dashes in anything the site says', () => {
-  const words = JSON.stringify({ gym, groups, rounds, plans, coaches });
+  const words = JSON.stringify({ gym, groups, rounds, plans, coaches, pricesPage });
   assert.ok(!/[‒-―]| - /.test(words));
+});
+
+test('the wall board: one row per time, earliest first, groups on their own days only', () => {
+  const b = board(groups);
+  assert.deepEqual(b.map((r) => r.time), ['10:00 AM', '4:30 PM', '5:30 PM', '7:00 PM']);
+  const at = (time: string, day: string) => b.find((r) => r.time === time)!.cells.find((c) => c.day === day)!.groups.map((g) => g.id);
+  assert.deepEqual(at('4:30 PM', 'Mon'), ['kickers']);
+  assert.deepEqual(at('4:30 PM', 'Tue'), []);
+  assert.deepEqual(at('5:30 PM', 'Thu'), ['juniors']);
+  assert.deepEqual(at('10:00 AM', 'Sat'), ['adults']);
+  assert.throws(() => minutes('half five'));
+});
+
+test('the day words and the day list say the same thing', () => {
+  for (const g of groups) for (const s of g.slots) assert.equal(s.short, s.on.join(', '));
 });

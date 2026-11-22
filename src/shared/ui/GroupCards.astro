@@ -1,15 +1,16 @@
 ---
-import Pic from '../../../shared/ui/Pic.astro';
-import type { useHomeScreen } from '../application/home.ts';
-interface Props { week: ReturnType<typeof useHomeScreen>['week'] }
-const { week } = Astro.props;
+import Pic from './Pic.astro';
+import type { GroupCard } from '../../features/gym/application/cards.ts';
+interface Props { cards: GroupCard[]; title: string; id: string; more?: { href: string; label: string } }
+const { cards, title, id, more } = Astro.props;
 ---
-<section class="wrap rise" id="week" aria-labelledby="week-h">
+<section class="wrap rise" id={id} aria-labelledby={`${id}-h`}>
   <div class="head">
-    <h2 class="cond" id="week-h">This week</h2>
+    <h2 class="cond" id={`${id}-h`}>{title}</h2>
+    {more && <a class="quiet" href={more.href}>{more.label}</a>}
   </div>
   <div class="week">
-    {week.map((g) => (
+    {cards.map((g) => (
       <article class="group">
         <Pic pic={g.pic} sizes="(max-width: 1000px) 90vw, 33vw" />
         <div class="body">

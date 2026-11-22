@@ -1,0 +1,20 @@
+---
+import { links } from '../../../shared/links.ts';
+import { gym } from '../../gym/domain/facts.ts';
+import type { usePricesScreen } from '../application/prices.ts';
+interface Props { page: ReturnType<typeof usePricesScreen>['page'] }
+const { page } = Astro.props;
+---
+<section class="wrap rise" aria-labelledby="plans-h">
+  <div class="head">
+    <h2 class="cond" id="plans-h">The plans</h2>
+  </div>
+  <div class="free">
+    <p>{page.free.head} {page.free.line}</p>
+    <a class="btn btn-white" href={links.book}>{gym.action} <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+  </div>
+  <div class="plans">
+    {page.plans.map((p) => <div class="plan"><span class="who">{p.who}</span><span class="price cond">${p.price}<small>{p.per}</small></span><p>{p.what}</p></div>)}
+  </div>
+  <p class="nocontract">{page.noContract}</p>
+</section>

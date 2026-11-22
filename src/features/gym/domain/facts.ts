@@ -4,7 +4,12 @@
 
 export type GroupId = 'kickers' | 'juniors' | 'adults';
 
-export interface Slot { days: string; short: string; time: string }
+export type Day = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
+export const week: Day[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const dayNames: Record<Day, string> = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
+
+// "days" drives the wall board; "label" is how the copy says it.
+export interface Slot { on: Day[]; days: string; short: string; time: string }
 export interface Group { id: GroupId; name: string; ages: string; tag: string; slots: Slot[] }
 export interface Plan { who: string; price: number; per: string; what: string }
 export interface Round { rounds: string; name: string; what: string; photo: PhotoId }
@@ -24,10 +29,27 @@ export const gym = {
 };
 
 export const groups: Group[] = [
-  { id: 'kickers', name: 'Little Kickers', ages: 'ages 6 to 8', tag: 'Little Kickers, 6 to 8', slots: [{ days: 'Mondays and Wednesdays', short: 'Mon, Wed', time: '4:30 PM' }] },
-  { id: 'juniors', name: 'Juniors', ages: 'ages 9 to 13', tag: 'Juniors, 9 to 13', slots: [{ days: 'Tuesdays and Thursdays', short: 'Tue, Thu', time: '5:30 PM' }] },
-  { id: 'adults', name: 'Adults', ages: 'beginners', tag: 'Adults', slots: [{ days: 'Mondays and Wednesdays', short: 'Mon, Wed', time: '7:00 PM' }, { days: 'Saturdays', short: 'Sat', time: '10:00 AM' }] },
+  { id: 'kickers', name: 'Little Kickers', ages: 'ages 6 to 8', tag: 'Little Kickers, 6 to 8', slots: [{ on: ['Mon', 'Wed'], days: 'Mondays and Wednesdays', short: 'Mon, Wed', time: '4:30 PM' }] },
+  { id: 'juniors', name: 'Juniors', ages: 'ages 9 to 13', tag: 'Juniors, 9 to 13', slots: [{ on: ['Tue', 'Thu'], days: 'Tuesdays and Thursdays', short: 'Tue, Thu', time: '5:30 PM' }] },
+  { id: 'adults', name: 'Adults', ages: 'beginners', tag: 'Adults', slots: [{ on: ['Mon', 'Wed'], days: 'Mondays and Wednesdays', short: 'Mon, Wed', time: '7:00 PM' }, { on: ['Sat'], days: 'Saturdays', short: 'Sat', time: '10:00 AM' }] },
 ];
+
+export const classesPage = {
+  title: 'Classes and times',
+  line: 'Pick your group and a day. Your first class is free.',
+  bring: 'Comfortable clothes, a water bottle and bare feet on the mat. Gloves and pads are lent for your first class.',
+};
+
+export const pricesPage = {
+  title: 'Prices',
+  free: { head: 'Your first class is free.', line: 'Come once, then decide.' },
+  plans: [
+    { who: 'Kids', price: 60, per: 'a month', what: 'Two classes a week, for Little Kickers or Juniors.' },
+    { who: 'Adults', price: 70, per: 'a month', what: 'Any adult class.' },
+    { who: 'Drop in', price: 15, per: 'a class', what: 'One class, no plan.' },
+  ] satisfies Plan[],
+  noContract: 'No contract. Plans run month to month, and you can stop with one message.',
+};
 
 export const rounds: Round[] = [
   { rounds: 'Round 1 to 2', name: 'Warm up', what: 'Skipping, footwork, getting loose.', photo: 'little-kickers' },
@@ -55,5 +77,23 @@ export const closing = 'Come and try a class.';
 // The short line used in the hero's week at a glance: "Mon, Wed 4:30 PM" or "Mon, Wed 7 PM, Sat 10 AM".
 export function glance(g: Group): string {
   const short = (t: string) => t.replace(':00', '');
-  return g.slots.map((s) => `${s.short} ${g.slots.length > 1 ? short(s.time) : s.time}`).join(', ');
+  return g.slots.map((s) => `${s.on.join(', ')} ${g.slots.length > 1 ? short(s.time) : s.time}`).join(', ');
+}
+
+// Minutes after midnight, so the board can sort by time.
+export function minutes(time: string): number {
+  const m = /^(\d{1,2}):(\d{2}) (AM|PM)$/.exec(time);
+  if (!m) throw new Error(`Not a time: "${time}"`);
+  return (Number(m[1]) % 12 + (m[3] === 'PM' ? 12 : 0)) * 60 + Number(m[2]);
+}
+
+export interface BoardRow { time: string; cells: { day: Day; groups: Group[] }[] }
+
+// The wall board: one row per class time, earliest first, one cell per day of the week.
+export function board(gs: Group[]): BoardRow[] {
+  const times = [...new Set(gs.flatMap((g) => g.slots.map((s) => s.time)))].sort((a, b) => minutes(a) - minutes(b));
+  return times.map((time) => ({
+    time,
+    cells: week.map((day) => ({ day, groups: gs.filter((g) => g.slots.some((s) => s.time === time && s.on.includes(day))) })),
+  }));
 }

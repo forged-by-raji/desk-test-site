@@ -83,3 +83,6 @@ Not three diagrams of one page. Three different looks, all from this sheet:
 1. **The full photo:** the master photo fills the first screen inside the container, the headline set across its lower edge.
 2. **The colour field:** a mat blue first screen, the headline in white, the photos as tall cut panels.
 3. **The class in pictures:** a strip of the five phase photos under the headline, each with its round numbers, like a contact sheet.
+
+## Build log
+- **Slice 1, the home page** (pull request 2): approved by Musawir, 20 Nov 2026 ("Approve slice 1").
