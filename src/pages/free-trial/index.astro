@@ -1,0 +1,24 @@
+---
+import Layout from '../../shared/ui/Layout.astro';
+import Header from '../../shared/ui/Header.astro';
+import Footer from '../../shared/ui/Footer.astro';
+import Booking from '../../features/trial/ui/Booking.astro';
+import GroupCards from '../../shared/ui/GroupCards.astro';
+import { groupCards } from '../../features/gym/application/cards.ts';
+import { useTrialScreen } from '../../features/trial/application/trial.ts';
+const s = useTrialScreen();
+---
+<Layout title="Book your free first class: Test Gym Kickboxing" description={`${s.page.title}. ${s.page.steps.map((x) => `${x.name}: ${x.what}`).join(' ')}`}>
+  <Header />
+  <main id="top">
+    <Booking page={s.page} groups={s.groups} address={s.address} pic={s.pic} />
+    <GroupCards cards={groupCards()} title="The groups" id="groups" />
+  </main>
+  <Footer />
+  <script>
+    import { startRise } from '../../shared/rise.ts';
+    import { startForm } from '../../features/trial/application/form.ts';
+    startRise();
+    startForm();
+  </script>
+</Layout>

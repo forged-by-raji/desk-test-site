@@ -1,0 +1,36 @@
+---
+import Pic from '../../../shared/ui/Pic.astro';
+import type { useTrialScreen } from '../application/trial.ts';
+type S = ReturnType<typeof useTrialScreen>;
+interface Props { page: S['page']; groups: S['groups']; address: string; pic: S['pic'] }
+const { page, groups, address, pic } = Astro.props;
+---
+<div class="wrap">
+  <div class="field trial">
+    <div class="trial-lead">
+      <h1 class="cond">{page.title}</h1>
+      <ol class="steps">{page.steps.map((s, i) => <li><span class="n cond">{i + 1}</span><span><b>{s.name}.</b> {s.what}</span></li>)}</ol>
+      <p class="where">{address}</p>
+    </div>
+    <div class="trial-side">
+    <div class="trial-form">
+      <form id="book" novalidate>
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Who is coming
+          <select name="group" required>
+            <option value="">Choose a group</option>
+            {groups.map((g) => <option value={g.id}>{g.label}</option>)}
+          </select>
+        </label>
+        <label>Preferred day<select name="day" required></select></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <ul class="errors" role="alert" tabindex="-1" hidden></ul>
+        <button class="btn btn-mat" type="submit">{page.button} <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+        <p class="how">This opens WhatsApp with your booking written out, ready to send.</p>
+      </form>
+      <p class="done" tabindex="-1" hidden>{page.after}</p>
+    </div>
+    <figure class="window"><Pic pic={pic} sizes="(max-width: 640px) 90vw, 45vw" eager par /><figcaption>Juniors, Tuesdays and Thursdays</figcaption></figure>
+    </div>
+  </div>
+</div>

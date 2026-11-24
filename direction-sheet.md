@@ -86,3 +86,5 @@ Not three diagrams of one page. Three different looks, all from this sheet:
 
 ## Build log
 - **Slice 1, the home page** (pull request 2): approved by Musawir, 20 Nov 2026 ("Approve slice 1").
+- **Slice 2, Classes and times and Prices** (pull request 3): approved by Musawir, 22 Nov 2026 ("Approve slice 2").
+- **Slice 3, Coaches and the Free trial booking** (pull request 4): approved by Musawir, 24 Nov 2026 ("Approve slice 3").
